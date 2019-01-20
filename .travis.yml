@@ -1,9 +1,25 @@
 sudo: required
 services:
   - docker
-  
+
+# build the docker image
 before_install:
   - docker build -t ssimonitch/docker-react -f Dockerfile.dev .
   
+# run tests using the docker image
 script:
   - docker run ssimonitch/docker-react npm run test -- --coverage
+  
+# deploy to AWS
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "docker-react"
+  name: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-east-1-394317036956"
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
