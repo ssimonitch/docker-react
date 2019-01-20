@@ -6,4 +6,4 @@ before_install:
   - docker build -t ssimonitch/docker-react -f Dockerfile.dev .
   
 script:
-  - docker run ssimointch/docker-react npm run test -- --coverage
+  - docker run ssimonitch/docker-react npm run test -- --coverage
